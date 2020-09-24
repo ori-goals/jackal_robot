@@ -1,12 +1,12 @@
 <launch>
   <arg name="jackal_port" default="/dev/jackal" />
   <!-- If operating multiple jackals on the same ros master, use this to separate their topics and tf trees -->
-  <arg name="robot_name" default=""/>
-  <arg name="namespace" value="$(eval '/' if not robot_name else robot_name)"/>
+  <arg name="robot_id" default=""/>
+  <arg name="namespace" value="$(eval '/' if not robot_id else robot_id)"/>
 
   <group ns="$(arg namespace)">
     <include file="$(find jackal_description)/launch/description.launch">
-      <arg name="tf_prefix" value="$(arg robot_name)"/>
+      <arg name="tf_prefix" value="$(arg robot_id)"/>
     </include>
 
     <node pkg="jackal_base" type="jackal_node" name="jackal_node">
@@ -44,7 +44,7 @@
 
     <!-- Differential controller and basic localization -->
     <include file="$(find jackal_control)/launch/control.launch">
-      <arg name="tf_prefix" value="$(arg robot_name)"/>
+      <arg name="tf_prefix" value="$(arg robot_id)"/>
     </include>
 
     <!-- Teleoperation via joystick and rviz interactive markers -->
